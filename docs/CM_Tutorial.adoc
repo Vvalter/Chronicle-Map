@@ -42,7 +42,7 @@ ChronicleMap<CharSequence, PostalCodeRange> cityPostalCodes =
 
 // Or shorter form, without builder variable extraction:
 
-ChronicleMap<Integer, PostalCodeRange> cityPostalCodes = ChronicleMap
+ChronicleMap<CharSequence, PostalCodeRange> cityPostalCodes = ChronicleMap
     .of(CharSequence.class, PostalCodeRange.class)
     .name("city-postal-codes-map")
     .averageKey("Amsterdam")
@@ -114,13 +114,13 @@ inconsistencies and, if any are found, it cleans them up.
 
 `.recoverPersistedTo()` needs to access the Chronicle Map exclusively. If a concurrent process is
 accessing the Chronicle Map while another process is attempting to perform recovery, the results of
-operations on the accessing process side, and results of recovery are unspecified; the data could be corrupted further. You must ensure thst no other process is accessing the Chronicle Map store when
+operations on the accessing process side, and results of recovery are unspecified; the data could be corrupted further. You must ensure that no other process is accessing the Chronicle Map store when
 calling `.recoverPersistedTo()`.
 
 Example:
 
 ```java
-ChronicleMap<Integer, PostalCodeRange> cityPostalCodes = ChronicleMap
+ChronicleMap<CharSequence, PostalCodeRange> cityPostalCodes = ChronicleMap
     .of(CharSequence.class, PostalCodeRange.class)
     .name("city-postal-codes-map")
     .averageKey("Amsterdam")
@@ -159,7 +159,7 @@ Chronicle Map creation and recovery could be conveniently merged using a single 
 `recoverPersistedTo(persistenceFile, sameLibraryVersion)`, if the file already exists. For example:
 
 ```java
-ChronicleMap<Integer, PostalCodeRange> cityPostalCodes = ChronicleMap
+ChronicleMap<CharSequence, PostalCodeRange> cityPostalCodes = ChronicleMap
     .of(CharSequence.class, PostalCodeRange.class)
     .averageKey("Amsterdam")
     .entries(50_000)
@@ -169,7 +169,7 @@ ChronicleMap<Integer, PostalCodeRange> cityPostalCodes = ChronicleMap
 If the Chronicle Map is configured to store entry checksums along with entries, then the recovery procedure checks that the checksum is correct for each entry.
 
 Otherwise, it assumes the entry is corrupted and deletes it from the Chronicle Map. If checksums are to be stored, the recovery procedure cannot guarantee
-correctness of the entry data. See [Entry checksums](#entry-checksums) section for more information.
+correctness of the entry data. See <<Entry checksums>> section for more information.
 
 == Key and Value Types
 
